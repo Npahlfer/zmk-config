@@ -26,6 +26,14 @@
             tapping-term-ms = <200>;
             bindings = <&mo LOWER>, <&to LOWER>;
         };
+       gac_or_esc: gac_or_esc {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";       // or "balanced"
+            //require-prior-idle-ms = <125>
+            tapping-term-ms = <200>;
+            bindings = <&gac_hold>, <&kp>;   // hold behavior, tap behavior
+    };
     };
 
     macros {
@@ -60,6 +68,16 @@
                 = <&out OUT_BLE>,
                   <&bt BT_SEL 3>;
         };
+        gac_hold: gac_hold {
+            compatible = "zmk,behavior-macro";
+             #binding-cells = <0>;
+             wait-ms = <0>;
+             tap-ms = <0>;
+             bindings 
+               = <&macro_press   &kp LGUI &kp LALT &kp LCTRL>,  // press mods on key down
+                 <&macro_pause_for_release>,                    // ...wait until key up...
+                 <&macro_release &kp LCTRL &kp LALT &kp LGUI>;  // release mods on key up
+        };
     };
 
     keymap {
@@ -75,12 +93,12 @@
             // | MAGIC | HOME| END | LEFT | RIGHT|      | BSPC  | DEL   | LALT  | | RALT  | RET   | SPACE |      |  UP   | DOWN  |  [   |   ]   | PGDN |
 
             bindings = <
-            &kp F1         &kp F2    &kp F3      &kp F4      &kp F5                                                                                         &kp F6   &kp F7      &kp F8      &kp F9      &kp F10
-            &kp EQUAL      &kp N1    &kp N2      &kp N3      &kp N4      &kp N5                                                                     &kp N6  &kp N7   &kp N8     &kp N9      &kp N0      &kp MINUS
-            &kp TAB        &kp Q     &kp W       &kp E       &kp R       &kp T                                                                      &kp Y   &kp U    &kp I      &kp O       &kp P       &kp BSLH
-            &kp ESC        &kp A     &kp S       &kp D       &kp F       &kp G                                                                      &kp H   &kp J    &kp K      &kp L       &kp SEMI    &kp SQT
-            &kp GRAVE      &kp Z     &kp X       &kp C       &kp V       &kp B   &kp LSHFT   &kp LCTRL   &layer_td  &kp DEL   &kp RCTRL &kp RSHFT   &kp N   &kp M    &kp COMMA  &kp DOT     &kp FSLH    &kp PG_UP
-            &mo MAGIC      &kp HOME  &kp END     &kp LEFT    &kp RIGHT           &kp BSPC    &kp LGUI    &kp LALT   &kp RALT  &kp RET   &kp SPACE           &kp DOWN &kp UP     &kp LBKT    &kp RBKT    &kp PG_DN
+            &kp F1             &kp F2    &kp F3      &kp F4      &kp F5                                                                                         &kp F6   &kp F7      &kp F8      &kp F9      &kp F10
+            &kp EQUAL          &kp N1    &kp N2      &kp N3      &kp N4      &kp N5                                                                     &kp N6  &kp N7   &kp N8     &kp N9      &kp N0      &kp MINUS
+            &kp TAB            &kp Q     &kp W       &kp E       &kp R       &kp T                                                                      &kp Y   &kp U    &kp I      &kp O       &kp P       &kp BSLH
+            &gac_or_esc 0 ESC  &kp A     &kp S       &kp D       &kp F       &kp G                                                                      &kp H   &kp J    &kp K      &kp L       &kp SEMI    &kp SQT
+            &kp GRAVE          &kp Z     &kp X       &kp C       &kp V       &kp B   &kp LSHFT   &kp LCTRL   &layer_td  &kp DEL   &kp RCTRL &kp RSHFT   &kp N   &kp M    &kp COMMA  &kp DOT     &kp FSLH    &kp PG_UP
+            &mo MAGIC          &kp HOME  &kp END     &kp LEFT    &kp RIGHT           &kp BSPC    &kp LGUI    &kp LALT   &kp RALT  &kp RET   &kp SPACE           &kp DOWN &kp UP     &kp LBKT    &kp RBKT    &kp PG_DN
             >;
         };
 
